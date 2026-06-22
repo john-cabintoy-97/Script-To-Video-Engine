@@ -124,8 +124,12 @@ export default function DashboardPage() {
     setProgress(8);
     setLoadingStepIndex(0);
 
-    try {
-      const response = await fetch("/api/generate", {
+   try {
+      // 1. Get the Railway backend base URL (falls back to localhost for local testing)
+      const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:7860";
+
+      // 2. Use the template literal to point directly to your Railway endpoint
+      const response = await fetch(`${BACKEND_URL}/api/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ script: trimmed, voiceProfile }),
